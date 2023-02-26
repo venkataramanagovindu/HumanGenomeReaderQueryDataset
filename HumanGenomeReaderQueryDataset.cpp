@@ -2,10 +2,16 @@
 //
 
 #include <iostream>
+#include "Queries_AR.h"
 
 int main()
 {
     std::cout << "Hello World!\n";
+    Queries_AR dataSet = Queries_AR("human_reads.fa");
+
+    dataSet.readQueriesFile();
+    dataSet.readHumanGenomeFile("human_genome.txt");
+    dataSet.search();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
