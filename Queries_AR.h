@@ -1,4 +1,6 @@
-#include <cstddef>
+#ifndef Queries_AR_H
+#define Queries_AR_H
+#endif
 #include <string>
 using namespace std;
 
@@ -14,14 +16,7 @@ class Queries_AR
 		int cols;
 
 	public:
-		Queries_AR() {
-			genomeQueries = NULL;
-			filePath = "";
-			queriesLineCount = 0;
-			genomeArray = NULL;
-			rows = 0;
-			cols = 32;
-		}
+		Queries_AR();
 		Queries_AR(string filePath);
 
 		void readQueriesFile();

@@ -1,17 +1,23 @@
 // HumanGenomeReaderQueryDataset.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
 #include "Queries_AR.h"
+#include <iostream>
+#include <stdio.h>
+
+using namespace std;
 
 int main()
 {
     std::cout << "Hello World!\n";
-    Queries_AR dataSet = Queries_AR("human_reads.fa");
+    Queries_AR *dataSet = new Queries_AR("human_reads.fa");
 
-    dataSet.readQueriesFile();
-    dataSet.readHumanGenomeFile("human_genome.txt");
-    dataSet.search();
+    dataSet->readQueriesFile();
+    dataSet->readHumanGenomeFile("human_genome.txt");
+    dataSet->search();
+
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

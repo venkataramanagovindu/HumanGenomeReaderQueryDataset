@@ -1,11 +1,26 @@
-#include<iostream>
-#include<fstream>
+
+#include <fstream>
+#include <iostream>
+#include <chrono>
+#include <string.h>
 
 #include "Queries_AR.h"
 
-//Queries_AR::Queries_AR() {
-//
-//}
+
+
+Queries_AR::Queries_AR() {
+    genomeQueries = NULL;
+    filePath = "";
+    queriesLineCount = 0;
+    genomeArray = NULL;
+    rows = 0;
+    cols = 32;
+}
+Queries_AR::Queries_AR(string filePath) : Queries_AR() {
+    this->filePath = filePath;
+}
+
+
 
 void Queries_AR::readQueriesFile() {
     queriesLineCount = 0;
@@ -136,9 +151,7 @@ void Queries_AR::sort() {
 
 }
 
-Queries_AR::Queries_AR(string filePath) {
-	this->filePath = filePath;
-}
+
 
 
 
