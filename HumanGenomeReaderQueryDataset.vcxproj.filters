@@ -28,9 +28,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="human_reads.fa" />
+    <None Include="human_reads_small.fa" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="human_genome.txt" />
+    <Text Include="human_genome_small.txt" />
   </ItemGroup>
 </Project>

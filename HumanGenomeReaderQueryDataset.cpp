@@ -10,11 +10,33 @@ using namespace std;
 int main()
 {
     std::cout << "Hello World!\n";
-    Queries_AR *dataSet = new Queries_AR("human_reads.fa");
+    //Queries_AR *dataSet = new Queries_AR("../human_reads.fa");
+    Queries_AR* dataSet = new Queries_AR("human_reads_small2.fa");
+
 
     dataSet->readQueriesFile();
-    dataSet->readHumanGenomeFile("human_genome.txt");
+    //dataSet->readHumanGenomeFile("../HumanGenomeReader/human.txt");
+    //dataSet->readHumanGenomeFile("human.txt");
+    dataSet->readHumanGenomeFile("human_genome_small.txt");
+    
+
     dataSet->search();
+    //cout << "Before sort" << endl;
+    //for (int i = 0; i < dataSet->rows; i++)
+    //{
+    //    cout << dataSet->genomeQueries[i] << endl;
+    //}
+    dataSet->sort();
+
+    cout << endl;
+
+    //cout << "After sort" << endl;
+    //for (int i = 0; i < dataSet->rows; i++)
+    //{
+    //    cout << dataSet->genomeQueries[i] << endl;
+    //}
+
+    dataSet->searchAfterSort();
 
 
     return 0;
