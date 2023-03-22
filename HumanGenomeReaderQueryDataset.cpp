@@ -7,36 +7,52 @@
 
 using namespace std;
 
-int main()
+int main(int argc, char** argv)
 {
     std::cout << "Hello World!\n";
+
+    //string Queries_File_Path = argv[1], genomeFilePath = argv[2];
+    //char* end;
+    //long long int count = strtoll(argv[3], &end, 10);
+    //    cout << Queries_File_Path << endl;
+    //cout << genomeFilePath << endl;
+    //cout << count << endl;
+
+
     //Queries_AR *dataSet = new Queries_AR("../human_reads.fa");
     Queries_AR* dataSet = new Queries_AR("human_reads_small2.fa");
 
+    int tenThousand = 10000, HundredThousand = 100000, OneMillion = 1000000;
 
+
+
+
+
+    cout << "Reading human reads file" << endl;
     dataSet->readQueriesFile();
-    //dataSet->readHumanGenomeFile("../HumanGenomeReader/human.txt");
+
+    dataSet->readHumanGenomeFile("human_genome.txt");
     //dataSet->readHumanGenomeFile("human.txt");
-    dataSet->readHumanGenomeFile("human_genome_small.txt");
+    //dataSet->readHumanGenomeFile("human.txt");
+    cout << "Linear search started" << endl;
+    dataSet->linearSearch(100);
+    cout << "Before sort" << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        cout << dataSet->genomeQueries[i] << endl;
+    }
+    cout << "Sorting start" << endl;
+    dataSet->sort();
+    cout << "Sorting end" << endl;
     
 
-    dataSet->search();
-    //cout << "Before sort" << endl;
-    //for (int i = 0; i < dataSet->rows; i++)
-    //{
-    //    cout << dataSet->genomeQueries[i] << endl;
-    //}
-    dataSet->sort();
+    cout << "After sort" << endl;
+    for (int i = 0; i < 5; i++)
+    {
+        cout << dataSet->genomeQueries[i] << endl;
+    }
 
-    cout << endl;
-
-    //cout << "After sort" << endl;
-    //for (int i = 0; i < dataSet->rows; i++)
-    //{
-    //    cout << dataSet->genomeQueries[i] << endl;
-    //}
-
-    dataSet->searchAfterSort();
+    dataSet->searchAfterSort(tenThousand);
 
 
     return 0;

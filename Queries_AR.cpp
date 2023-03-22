@@ -163,7 +163,7 @@ void Queries_AR::readHumanGenomeFile(string genomeFilePath) {
 //
 //}
 
-void Queries_AR::search() {
+void Queries_AR::linearSearch(long long int searchLength) {
     int numberOfHits = 0;
     long long int size = strlen(this->genomeArray);
     double time_taken = 0;
@@ -176,8 +176,11 @@ void Queries_AR::search() {
 
     //cout << "o/p from search ";
 
-    for (long long int i = 0; i < size - 31; i++) {
+    for (long long int i = 0; i < searchLength; i++) {
         char substr[33];
+        if (i%5 == 0) {
+            cout << "Searching the " << i << "th index" << endl;
+        }
         strncpy(substr, this->genomeArray + i, 32);
         substr[32] = '\0';
         for (long long int j = 0; j < this->rows; j++) {
@@ -204,46 +207,24 @@ void Queries_AR::search() {
             }
         }
 
-        if (i == this->TEN_THOUSAND)
-        {
-            numberOfHits = 0;
-            time(&end);
+        //if (i == this->TEN_THOUSAND)
+        //{
 
-            // Calculating total time taken by the program.
-            time_taken = double(end - start);
-            cout << "Time taken to search the 10K characters : " << fixed
-                << time_taken;
-            cout << " sec " << endl;
-        }
-        if (i == this->HUNDRED_THOUSAND) 
-        {
-            numberOfHits = 0;
-            time(&end);
-
-            // Calculating total time taken by the program.
-            time_taken = double(end - start);
-            cout << "Time taken to search the 100K characters : " << fixed
-                << time_taken;
-            cout << " sec " << endl;
-        }
-
-        if (i == this->ONE_MILLION)
-        {
-            numberOfHits = 0;
-            time(&end);
-
-            // Calculating total time taken by the program.
-            time_taken = double(end - start);
-            cout << "Time taken to search the 1M characters : " << fixed
-                << time_taken;
-            cout << " sec " << endl;
-        }
+        //}
     }
+    numberOfHits = 0;
+    time(&end);
+
+    // Calculating total time taken by the program.
+    time_taken = double(end - start);
+    std::cout << "Time taken to search the " << searchLength << " characters : " << fixed
+        << time_taken;
+    std::cout << " sec " << endl;
 
 
 }
 
-void Queries_AR::searchAfterSort() {
+void Queries_AR::searchAfterSort(long long int searchLength) {
     int numberOfHits = 0;
     long long int size = strlen(this->genomeArray);
     double time_taken = 0;
@@ -254,7 +235,7 @@ void Queries_AR::searchAfterSort() {
     std::time(&start);
     std::ios_base::sync_with_stdio(false);
 
-    for (long long int i = 0; i < size - 31; i++) {
+    for (long long int i = 0; i < searchLength; i++) {
         char substr[33];
         strncpy(substr, this->genomeArray + i, 32);
         substr[32] = '\0';
@@ -263,6 +244,7 @@ void Queries_AR::searchAfterSort() {
         if (numberOfHits < 10 && idx != -1) {
             cout << substr << " index " << i << endl;
             numberOfHits++;
+            continue;
         }
         int x = 0;
     }
@@ -278,29 +260,82 @@ void Queries_AR::searchAfterSort() {
     cout << " sec " << endl;
 }
 
-long long int Queries_AR::binarySearch(long long int s, long long int e, char substr[33]) {
-    if (e >= s) {
-        long long int idx = s + (e - s) / 2;
+//long long int Queries_AR::binarySearch(long long int s, long long int e, char substr[33]) {
+//    if (e >= s) {
+//        long long int idx = s + (e - s) / 2;
+//
+//        int compareop = strcmp(substr, this->genomeQueries[idx]);
+//        if (compareop == 0) {
+//            return idx;
+//        }
+//        else if(compareop == -1)
+//        {
+//            return this->binarySearch(s, idx - 1, substr);
+//        }
+//        else
+//        {
+//            return this->binarySearch(idx + 1, e, substr);
+//        }
+//    }
+//
+//    return -1;
+//}
 
-        int compareop = strcmp(substr, this->genomeQueries[idx]);
-        if (compareop == 0) {
-            return idx;
+long long int Queries_AR::binarySearch(long long int s, long long int e, char substr[33]) {
+    int l = 0;
+    int r = e;
+
+    while (l <= r) {
+        int midIdx = l + (r - l) / 2;
+        int cmp = strcmp(this->genomeQueries[midIdx], substr);
+        if (cmp == 0) {
+            return midIdx;
         }
-        else if(compareop == -1)
-        {
-            return this->binarySearch(s, idx - 1, substr);
+        else if (cmp < 0) {
+            l = midIdx + 1;
         }
-        else
-        {
-            return this->binarySearch(idx + 1, e, substr);
+        else {
+            r = midIdx - 1;
         }
     }
 
+    // target not found
     return -1;
 }
 
 void Queries_AR::sort() {
-    QuickSort(this->genomeQueries, 0, this->rows - 1 );
+    //QuickSort(this->genomeQueries, 0, this->rows - 1 );
+    HeapSort(this->genomeQueries, this->rows);
+}
+
+void Queries_AR::HeapSort(char** arr, long long int  len) {
+    for (int i = len / 2 - 1; i >= 0; i--) {
+        heapify(arr, len, i);
+    }
+
+    for (int i = len - 1; i >= 0; i--) {
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
+}
+
+void Queries_AR::heapify(char** arr, int len, int i) {
+    int largest = i;
+    int l = 2 * i + 1;
+    int r = 2 * i + 2;
+
+    if (l < len && strcmp( arr[l] , arr[largest]) > 0) {
+        largest = l;
+    }
+
+    if (r < len && strcmp(arr[r], arr[largest]) > 0) {
+        largest = r;
+    }
+
+    if (largest != i) {
+        swap(arr[i], arr[largest]);
+        heapify(arr, len, largest);
+    }
 }
 
 void Queries_AR::QuickSort(char** arr, long long int start, long long int end) {
@@ -334,12 +369,6 @@ long long int Queries_AR::partition(char** arr, long long int start, long long i
     swap(arr[start], arr[j]);
     return j;
 }
-
-
-
-
-
-
 
 Queries_AR::~Queries_AR() {
 	delete this->genomeQueries;

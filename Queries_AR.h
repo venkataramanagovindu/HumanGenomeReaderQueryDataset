@@ -26,11 +26,13 @@ class Queries_AR
 
 		void readQueriesFile();
 		void readHumanGenomeFile(string genomeFilePath);
-		void search();
-		void searchAfterSort();
+		void linearSearch(long long int searchLength);
+		void searchAfterSort(long long int searchLength);
 		long long int binarySearch(long long int s, long long int e, char substr[33]);
 		void sort();
 		void QuickSort(char** arr, long long int start, long long int end);
+		void HeapSort(char** arr, long long int  len);
+		void heapify(char** arr, int len, int i);
 		long long int partition(char** arr, long long int start, long long int end);
 		~Queries_AR();
 };
